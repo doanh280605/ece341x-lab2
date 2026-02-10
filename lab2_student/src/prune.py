@@ -10,7 +10,25 @@ def magnitude_mask(W: torch.Tensor, sparsity: float) -> torch.Tensor:
 
     Students should implement this function.
     """
-    raise NotImplementedError("Implement magnitude_mask in student version")
+    if sparsity <= 0: 
+        return torch.ones_like(W, dtype=torch.bool) # create a boolean mask of all True on the same shape as W
+
+    if sparsity >= 1:
+        return torch.zeros_like(W, dtype=torch.bool) # create a boolean mask of all False on the same shape as W
+
+    flat = W.abs().flatten() # flatten the tensor and take absolute values for easy thresholding
+
+    k = int(sparsity * flat.numel()) # calculate the number of elements to prune based on sparsity
+
+    if k == 0: 
+        return torch.ones_like(W, dtype=torch.bool) # if no pruning, return all True mask
+    if k >= flat.numel(): # if pruning count hits or exceeds total, prune everything
+        return torch.zeros_like(W, dtype=torch.bool)
+
+    threshold, _ = torch.kthvalue(flat, k) # find the k-th smallest value which will be the threshold for pruning
+    mask = W.abs() > threshold # create a boolean mask where True means keep and False means prune
+
+    return mask
 
 
 def make_masks_for_model(named_weights, sparsity: float):

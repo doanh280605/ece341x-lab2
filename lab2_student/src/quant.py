@@ -11,8 +11,11 @@ def quantize_symmetric_int8(W: torch.Tensor):
 
     Students should implement this function.
     """
-    raise NotImplementedError("Implement quantize_symmetric_int8 in student version")
+    max_val = W.abs().max() # find the maximum absolute value in the tensor
+    scale = max_val / 127 if max_val > 0 else 1.0
 
+    Q = torch.round(W / scale).clamp(-127, 127).to(torch.int8) # quantize and clamp to int8 range
+    return Q, scale
 
 def dequantize_int8(Q: torch.Tensor, scale) -> torch.Tensor:
     """Dequantize int8 back to float16.
@@ -20,4 +23,5 @@ def dequantize_int8(Q: torch.Tensor, scale) -> torch.Tensor:
     TODO(Quant-2): implement dequantization
       - return (Q.float() * scale).half()
     """
-    raise NotImplementedError("Implement dequantize_int8 in student version")
+    return (Q.float() * scale).half() # dequantize by multiplying with scale and convert float32 to float16
+    
