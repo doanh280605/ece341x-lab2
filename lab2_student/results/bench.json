@@ -1,0 +1,85 @@
+[
+  {
+    "variant": "baseline_fp",
+    "test_acc": 0.852,
+    "t_batch1_s": 0.0006368541717529297,
+    "t_batch128_s": 0.005154733657836914,
+    "float_param_bytes": 36913448
+  },
+  {
+    "variant": "prune_only_s0.5",
+    "test_acc": 0.6336,
+    "t_batch1_s": 0.0006551694869995117,
+    "t_batch128_s": 0.0050839376449584965,
+    "float_param_bytes": 36913448,
+    "avg_mask_sparsity": 0.5
+  },
+  {
+    "variant": "prune_only_s0.8",
+    "test_acc": 0.1,
+    "t_batch1_s": 0.0007372140884399414,
+    "t_batch128_s": 0.0050469255447387696,
+    "float_param_bytes": 36913448,
+    "avg_mask_sparsity": 0.7999732626809014
+  },
+  {
+    "variant": "prune_only_s0.9",
+    "test_acc": 0.1,
+    "t_batch1_s": 0.0006651163101196289,
+    "t_batch128_s": 0.005011768341064453,
+    "float_param_bytes": 36913448,
+    "avg_mask_sparsity": 0.8999864127900865
+  },
+  {
+    "variant": "quant_int8_python_all",
+    "test_acc": 0.8527,
+    "t_batch1_s": 0.0006719398498535157,
+    "t_batch128_s": 0.005082631111145019,
+    "float_param_bytes": 36913448,
+    "num_layers": 9
+  },
+  {
+    "variant": "prune0.8_quant_int8_python_all",
+    "test_acc": 0.1,
+    "t_batch1_s": 0.0006771421432495117,
+    "t_batch128_s": 0.005054159164428711,
+    "float_param_bytes": 36913448,
+    "avg_mask_sparsity": 0.7999732626809014,
+    "num_layers": 9
+  },
+  {
+    "variant": "prune0.9_quant_int8_python_all",
+    "test_acc": 0.1,
+    "t_batch1_s": 0.0006377029418945312,
+    "t_batch128_s": 0.005023965835571289,
+    "float_param_bytes": 36913448,
+    "avg_mask_sparsity": 0.8999864127900865,
+    "num_layers": 9
+  },
+  {
+    "variant": "quant_int8_cuda_dequant_all",
+    "test_acc": 0.8527,
+    "t_batch1_s": 0.0006695890426635742,
+    "t_batch128_s": 0.005089983940124511,
+    "float_param_bytes": 36913448,
+    "num_layers": 9
+  },
+  {
+    "variant": "prune0.8_quant_int8_cuda_dequant_all",
+    "test_acc": 0.1,
+    "t_batch1_s": 0.000680694580078125,
+    "t_batch128_s": 0.005043263435363769,
+    "float_param_bytes": 36913448,
+    "avg_mask_sparsity": 0.7999732626809014,
+    "num_layers": 9
+  },
+  {
+    "variant": "prune0.9_quant_int8_cuda_dequant_all",
+    "test_acc": 0.1,
+    "t_batch1_s": 0.0006473207473754883,
+    "t_batch128_s": 0.005045561790466308,
+    "float_param_bytes": 36913448,
+    "avg_mask_sparsity": 0.8999864127900865,
+    "num_layers": 9
+  }
+]

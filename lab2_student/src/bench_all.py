@@ -8,11 +8,29 @@ from .prune import make_masks_for_model
 from .quant import quantize_symmetric_int8, dequantize_int8
 
 def try_import_cuda():
+    """Attempt to import the built CUDA extension.
+
+    First try a normal import. If that fails, insert the repo's `cuda_ext`
+    directory into sys.path and retry. Return the module or None.
+    """
     try:
         import dequant_ext
         return dequant_ext
-    except Exception:
-        return None
+    except Exception as e1:
+        # Try adding the cuda_ext sibling folder to sys.path and retry.
+        try:
+            import os, sys
+            repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            ext_dir = os.path.join(repo_root, "cuda_ext")
+            if ext_dir not in sys.path:
+                sys.path.insert(0, ext_dir)
+            import dequant_ext
+            return dequant_ext
+        except Exception as e2:
+            print("Could not import dequant_ext. CUDA quantization benchmarks will be skipped.")
+            print("First import error:", e1)
+            print("Retry import error (after adding cuda_ext to sys.path):", e2)
+            return None
 
 def clone_from_ckpt(variant, ckpt, device):
     m = get_model(variant).to(device)
@@ -108,8 +126,8 @@ def apply_quant_cuda_inplace(model, ext, masks=None):
 @torch.no_grad()
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--ckpt", type=str, default="checkpoints/vgg_cifar10.pt")
-    ap.add_argument("--variant", type=str, default="vgg16_bn")
+    ap.add_argument("--ckpt", type=str, default="checkpoints/vgg2_baseline.pt")
+    ap.add_argument("--variant", type=str, default="vgg2")
     ap.add_argument("--device", type=str, default="cuda")
     ap.add_argument("--batch1", type=int, default=1)
     ap.add_argument("--batch2", type=int, default=128)
@@ -159,6 +177,7 @@ def main():
 
     # CUDA quant (if available)
     if ext is not None:
+        print("Running CUDA quantization benchmarks (dequant in CUDA)...")
         m = clone_from_ckpt(args.variant, args.ckpt, device)
         scales = apply_quant_cuda_inplace(m, ext, masks=None)
         add_row("quant_int8_cuda_dequant_all", m, {"num_layers": len(scales)})

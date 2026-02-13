@@ -10,8 +10,8 @@ from .quant import quantize_symmetric_int8, dequantize_int8
 @torch.no_grad()
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--ckpt", type=str, default="checkpoints/vgg_cifar10.pt")
-    ap.add_argument("--variant", type=str, default="vgg16_bn")
+    ap.add_argument("--ckpt", type=str, default="checkpoints/vgg2_baseline.pt")
+    ap.add_argument("--variant", type=str, default="vgg2")
     ap.add_argument("--device", type=str, default="cuda")
     ap.add_argument("--sparsity", type=float, default=0.0)
     args = ap.parse_args()

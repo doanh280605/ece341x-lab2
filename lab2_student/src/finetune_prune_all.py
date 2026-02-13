@@ -11,8 +11,8 @@ from .prune import make_masks_for_model
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--ckpt", type=str, default="checkpoints/vgg-2.cifar.pretrained.pth")
-    ap.add_argument("--variant", type=str, default="vgg16_bn")
+    ap.add_argument("--ckpt", type=str, default="checkpoints/vgg2_baseline.pt")
+    ap.add_argument("--variant", type=str, default="vgg2")
     ap.add_argument("--epochs", type=int, default=1)
     ap.add_argument("--batch_size", type=int, default=128)
     ap.add_argument("--device", type=str, default="cuda")
