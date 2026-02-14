@@ -58,8 +58,7 @@ checkpoints/vgg2_baseline.pt
 
 ### 1) Evaluate pretrained checkpoint
 ```bash
-python -m src.bench_all --device cuda --skip_cuda
-```
+ ```
 
 ### 2) Finetune with pruning schedule (ALL layers)
 Edit `src/prune.py` TODOs, then run a sweep:

@@ -1,0 +1,7 @@
+{
+  "s_target": 0.8,
+  "warmup_frac": 0.1,
+  "ramp_end_frac": 0.8,
+  "avg_mask_sparsity": 0.7999732626809014,
+  "test_acc": 0.921
+}
